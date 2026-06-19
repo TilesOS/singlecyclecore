@@ -7,12 +7,12 @@ module register_file #(
     input logic rstn, // reset on negedge
 
     // read port 1
-    input logic [ADDR_WIDTH-1:0] rs1_addr,
-    input logic [DATA_WIDTH-1:0] rs1_data,
+    input  logic [ADDR_WIDTH-1:0] rs1_addr,
+    output logic [DATA_WIDTH-1:0] rs1_data,
 
     // read port 2
-    input logic [ADDR_WIDTH-1:0] rs2_addr,
-    input logic [DATA_WIDTH-1:0] rs2_data,
+    input  logic [ADDR_WIDTH-1:0] rs2_addr,
+    output logic [DATA_WIDTH-1:0] rs2_data,
 
     // write port
     input logic we,
@@ -20,6 +20,7 @@ module register_file #(
     input logic [DATA_WIDTH-1:0] rd_data
 );
 
+    // internal storage array
     logic [DATA_WIDTH-1:0] rf [NUM_REGS];
 
     // reads asynchronously
