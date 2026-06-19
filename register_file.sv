@@ -4,7 +4,7 @@ module register_file #(
     parameter int ADDR_WIDTH = 5 // 2^{5} = 32
 )(
     input logic clk,
-    input logic rstn, // reset on negedge
+    input logic rstn, // active-low asynchronous reset
 
     // read port 1
     input  logic [ADDR_WIDTH-1:0] rs1_addr,
