@@ -1,8 +1,8 @@
-module register_file #(
+module register_file # (
     parameter int DATA_WIDTH = 32,
     parameter int NUM_REGS = 32,
     parameter int ADDR_WIDTH = 5 // 2^{5} = 32
-)(
+) (
     input logic clk,
     input logic rstn, // active-low asynchronous reset
 
