@@ -78,6 +78,4 @@ module register_file_tb;
     endtask
 
 
-
-
     endmodule
