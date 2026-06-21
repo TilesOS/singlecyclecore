@@ -1,4 +1,4 @@
-module sign_extender #(
+module sign_extender # (
     parameter int IN_WIDTH  = 12,
     parameter int OUT_WIDTH = 32
 ) (

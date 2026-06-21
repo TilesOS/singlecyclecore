@@ -1,8 +1,8 @@
 module immediate_generator
-    import imm_pkg::*;
+    import immediate_type_pkg::*;
 (
     input  logic [31:0] instr,
-    input  imm_type_t  imm_type,
+    input  imm_type_t   imm_type,
     output logic [31:0] imm
 );
 
@@ -27,7 +27,6 @@ module immediate_generator
 
     // B-type immediate:
     // {instr[31], instr[7], instr[30:25], instr[11:8], 1'b0}
-    //
     // The final 1'b0 is included here, so the output is already the branch offset.
     assign imm_b_raw = {instr[31], instr[7], instr[30:25], instr[11:8], 1'b0};
 
@@ -37,12 +36,11 @@ module immediate_generator
 
     // J-type immediate:
     // {instr[31], instr[19:12], instr[20], instr[30:21], 1'b0}
-    //
     // The final 1'b0 is included here, so the output is already the jump offset.
     assign imm_j_raw = {instr[31], instr[19:12], instr[20], instr[30:21], 1'b0};
 
     // Use separate sign extender modules
-    sign_ext #(
+    sign_extender # (
         .IN_WIDTH(12),
         .OUT_WIDTH(32)
     ) sign_ext_i (
@@ -50,7 +48,7 @@ module immediate_generator
         .out(imm_i_ext)
     );
 
-    sign_ext #(
+    sign_extender # (
         .IN_WIDTH(12),
         .OUT_WIDTH(32)
     ) sign_ext_s (
@@ -58,7 +56,7 @@ module immediate_generator
         .out(imm_s_ext)
     );
 
-    sign_ext #(
+    sign_extender # (
         .IN_WIDTH(13),
         .OUT_WIDTH(32)
     ) sign_ext_b (
@@ -66,7 +64,7 @@ module immediate_generator
         .out(imm_b_ext)
     );
 
-    sign_ext #(
+    sign_extender # (
         .IN_WIDTH(21),
         .OUT_WIDTH(32)
     ) sign_ext_j (

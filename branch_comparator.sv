@@ -5,7 +5,7 @@ module branch_comparator
 ) (
     input  logic [DATA_WIDTH-1:0] rs1_data,
     input  logic [DATA_WIDTH-1:0] rs2_data,
-    input  branch_op_t           branch_op,
+    input  branch_op_t            branch_op,
     output logic                  branch_taken
 );
 
