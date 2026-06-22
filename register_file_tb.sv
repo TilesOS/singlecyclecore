@@ -89,7 +89,7 @@ module register_file_tb;
 
         // assert reset
         rstn = 0;
-        @(posedge clk);
+        @ (posedge clk);
         #1;
 
         // all registers should read zero during reset
@@ -97,17 +97,15 @@ module register_file_tb;
 
         // release reset
         rstn = 1;
-        @(posedge clk);
+        @ (posedge clk);
         #1;
 
-        // ------------------------------------------------
-        // test 1: write then read back each register
-        // ------------------------------------------------
+        // test write then read back each register
         for (int i = 0; i < NUM_REGS; i++) begin
             we      = 1;
             rd_addr = i[ADDR_WIDTH-1:0];
             rd_data = 32'hA000_0000 + i;
-            @(posedge clk);
+            @ (posedge clk);
             #1;
 
             if (i != 0) model[i] = 32'hA000_0000 + i;
@@ -118,52 +116,42 @@ module register_file_tb;
             check_read(i[ADDR_WIDTH-1:0], 5'd0, "write-readback");
         end
 
-        // ------------------------------------------------
-        // test 2: x0 is always zero (write should be ignored)
-        // ------------------------------------------------
+        // test x0 is always zero (write should be ignored)
         we      = 1;
         rd_addr = 5'd0;
         rd_data = 32'hDEAD_BEEF;
-        @(posedge clk);
+        @ (posedge clk);
         #1;
         we = 0;
 
         check_read(5'd0, 5'd0, "x0-hardwired");
 
-        // ------------------------------------------------
-        // test 3: read two different registers simultaneously
-        // ------------------------------------------------
+        // test read two different registers simultaneously
         check_read(5'd1, 5'd2, "dual-read");
 
-        // ------------------------------------------------
-        // test 4: write-enable low — register should not change
-        // ------------------------------------------------
+        // test 4 write-enable low — register should not change
         we      = 0;
         rd_addr = 5'd3;
         rd_data = 32'hFFFF_FFFF;
-        @(posedge clk);
+        @ (posedge clk);
         #1;
 
         check_read(5'd3, 5'd3, "we-low");
 
-        // ------------------------------------------------
         // test 5: overwrite a register
-        // ------------------------------------------------
         we      = 1;
         rd_addr = 5'd1;
         rd_data = 32'h1234_5678;
-        @(posedge clk);
+        @ (posedge clk);
         #1;
         we = 0;
         model[1] = 32'h1234_5678;
 
         check_read(5'd1, 5'd1, "overwrite");
 
-        // ------------------------------------------------
         // test 6: reset clears all registers
-        // ------------------------------------------------
         rstn = 0;
-        @(posedge clk);
+        @ (posedge clk);
         #1;
 
         for (int i = 0; i < NUM_REGS; i++) model[i] = '0;
@@ -173,12 +161,10 @@ module register_file_tb;
         end
 
         rstn = 1;
-        @(posedge clk);
+        @ (posedge clk);
         #1;
 
-        // ------------------------------------------------
         // summary
-        // ------------------------------------------------
         if (errors == 0)
             $display("PASS: all register_file tests passed.");
         else

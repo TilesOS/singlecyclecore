@@ -68,9 +68,7 @@ module immediate_generator_tb;
     initial begin
         errors = 0;
 
-        // ================================================
         // I-type immediate tests
-        // ================================================
 
         // positive value: imm = 100 = 12'h064
         check(build_i(12'h064), IMM_I, 32'h0000_0064, "i-pos-100");
@@ -87,19 +85,15 @@ module immediate_generator_tb;
         // min negative: -2048 = 12'h800
         check(build_i(12'h800), IMM_I, 32'hFFFFF800, "i-min-neg");
 
-        // ================================================
         // S-type immediate tests
-        // ================================================
 
         check(build_s(12'h064), IMM_S, 32'h0000_0064, "s-pos-100");
         check(build_s(12'hFFF), IMM_S, 32'hFFFF_FFFF, "s-neg-1");
         check(build_s(12'h000), IMM_S, 32'h0000_0000, "s-zero");
         check(build_s(12'h7FF), IMM_S, 32'h0000_07FF, "s-max-pos");
 
-        // ================================================
         // B-type immediate tests
         // imm is 13-bit, bit[0] is always 0 (half-word aligned)
-        // ================================================
 
         // +8: 13'b0_0000_0001_000 = 13'h008
         check(build_b(13'h008), IMM_B, 32'h0000_0008, "b-pos-8");
@@ -113,20 +107,16 @@ module immediate_generator_tb;
         // max positive: +4094 = 13'h0FFE
         check(build_b(13'h0FFE), IMM_B, 32'h0000_0FFE, "b-max-pos");
 
-        // ================================================
         // U-type immediate tests
         // upper 20 bits, lower 12 zeroed
-        // ================================================
 
         check(build_u(20'h12345), IMM_U, 32'h12345000, "u-arbitrary");
         check(build_u(20'h00000), IMM_U, 32'h0000_0000, "u-zero");
         check(build_u(20'hFFFFF), IMM_U, 32'hFFFFF000, "u-all-ones");
         check(build_u(20'h80000), IMM_U, 32'h80000000, "u-msb");
 
-        // ================================================
         // J-type immediate tests
         // imm is 21-bit, bit[0] is always 0
-        // ================================================
 
         // +8: 21'h008
         check(build_j(21'h008), IMM_J, 32'h0000_0008, "j-pos-8");
@@ -137,9 +127,7 @@ module immediate_generator_tb;
         // zero
         check(build_j(21'h000000), IMM_J, 32'h0000_0000, "j-zero");
 
-        // ================================================
         // summary
-        // ================================================
         if (errors == 0)
             $display("PASS: all immediate_generator tests passed.");
         else
