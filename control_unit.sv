@@ -140,7 +140,7 @@ module control_unit
     end
 
     // ------------------------------------------------------------------
-    // ALU decoder (ALU control folded in)
+    // ALU decoder section
     //
     // funct7[5] distinguishes ADD/SUB and SRL/SRA. It is only a real
     // funct field for R-type ops and for the two shift-right immediates;
